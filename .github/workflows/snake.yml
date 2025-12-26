@@ -1,0 +1,36 @@
+name: Generate Snake Game
+
+# 触发机制：
+# 1. 每天 UTC 时间 0点 (北京时间早上8点) 自动运行
+# 2. 允许手动点击 Star 按钮触发 (workflow_dispatch)
+on:
+  schedule:
+    - cron: "0 0 * * *" 
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Generate Snake Animation
+        uses: Platane/snk@v3
+        with:
+          github_user_name: ${{ github.repository_owner }} 
+          
+          outputs: |
+            static/images/github-snake.svg
+            static/images/github-snake-dark.svg?palette=github-dark
+            static/images/ocean.svg?color_snake=orange&color_dots=#bfd6f6,#8dbdff,#64a1f4,#4b91f1,#3c7dd9&color_background=#aaaaaa
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push Changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: 'chore: update snake animation [skip ci]'
+          add: 'static/images'
+          default_author: github_actions

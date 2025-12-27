@@ -1,76 +1,107 @@
-<!-- Switch 整体容器 -->
-<div class="switch-console">
-  
-  <!-- 左手柄 -->
-  <div class="joy-con left">
-    <div class="switch-btn-group d-pad">
-      <div class="switch-btn up"></div>
-      <div class="switch-btn right"></div>
-      <div class="switch-btn down"></div>
-      <div class="switch-btn left"></div>
+<div class="switch-wrapper">
+  <!-- Switch 整体容器 -->
+  <div class="switch-console">
+    
+    <!-- 左手柄 -->
+    <div class="joy-con left">
+      <div class="switch-btn-group d-pad">
+        <div class="switch-btn up"></div>
+        <div class="switch-btn right"></div>
+        <div class="switch-btn down"></div>
+        <div class="switch-btn left"></div>
+      </div>
+      <div class="stick"></div>
+      <div class="switch-btn minus">-</div>
+      <div class="switch-btn capture"></div>
     </div>
-    <div class="stick"></div>
-    <div class="switch-btn minus">-</div>
-    <div class="switch-btn capture"></div>
-  </div>
 
-  <!-- 中间屏幕 -->
-  <div class="console-screen">
-    <div class="screen-bezel">
-      <div id="dino-wrapper">
-        <div id="dino-cover">
-          <div class="dino-emoji">🦖</div>
-          <p class="dino-text">PRESS START</p>
+    <!-- 中间屏幕 -->
+    <div class="console-screen">
+      <div class="screen-bezel">
+        <div id="dino-wrapper">
+          <div id="dino-cover">
+            <div class="dino-emoji">🦖</div>
+            <p class="dino-text">PRESS START</p>
+          </div>
+          <iframe id="dino-frame" data-src="/blog/dino/index.html" frameborder="0" scrolling="no"></iframe>
         </div>
-        <iframe id="dino-frame" data-src="/blog/dino/index.html" frameborder="0" scrolling="no"></iframe>
       </div>
     </div>
-  </div>
 
-  <!-- 右手柄 -->
-  <div class="joy-con right">
-    <div class="switch-btn plus">+</div>
-    <div class="switch-btn-group abxy">
-      <div class="switch-btn a"></div>
-      <div class="switch-btn b"></div>
-      <div class="switch-btn x"></div>
-      <div class="switch-btn y"></div>
+    <!-- 右手柄 -->
+    <div class="joy-con right">
+      <div class="switch-btn plus">+</div>
+      <div class="switch-btn-group abxy">
+        <div class="switch-btn a"></div>
+        <div class="switch-btn b"></div>
+        <div class="switch-btn x"></div>
+        <div class="switch-btn y"></div>
+      </div>
+      <div class="stick"></div>
+      <div class="switch-btn switch-home-btn"></div>
     </div>
-    <div class="stick"></div>
-    <div class="switch-btn switch-home-btn"></div>
-  </div>
 
+  </div>
 </div>
 
-
 <style>
-  /* --- Switch 整体布局 --- */
+  /* --- 1. 外层容器 --- */
+  .switch-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 2rem 0;
+    /* 关键修正：去掉 hidden，防止切掉手柄。如果溢出，FixIt 主题通常会处理。 */
+    overflow: visible; 
+  }
+
+  /* --- 2. Switch 本体 --- */
   .switch-console {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 3rem auto;
     padding: 10px;
     width: fit-content;
     user-select: none; 
     -webkit-user-select: none;
-    transform-origin: center;
-    /* 开启硬件加速，但去除可能影响层级的属性 */
-    transform: translateZ(0); 
     cursor: pointer;
-    /* 关键修正：确保没有任何触摸屏蔽 */
-    touch-action: manipulation; 
+    touch-action: manipulation;
+    transform-origin: center center;
+    transform: translateZ(0); /* 开启硬件加速 */
+    
+    /* 默认稍微缩小一点点(0.9)，防止在带侧边栏的笔记本上太挤 */
+    transform: scale(0.9);
+    margin: -15px 0; /* 补偿 0.9 缩放带来的空隙 */
   }
   
-  @media (max-width: 768px) {
+  /* --- 3. 响应式适配 (更细腻的档位) --- */
+  
+  /* 档位 A: 平板/窄屏电脑/分屏 (关键修复点) */
+  @media (max-width: 900px) {
     .switch-console {
-      /* 手机端保持缩放，确保放得下 */
-      transform: scale(0.65) translateZ(0);
-      margin: -2rem -15%;
+      transform: scale(0.75);
+      margin: -35px 0; /* 缩放越小，负 margin 越大，把空白收回来 */
     }
   }
 
-  /* --- 手柄通用样式 --- */
+  /* 档位 B: 手机竖屏 */
+  @media (max-width: 600px) {
+    .switch-console {
+      transform: scale(0.55);
+      margin: -65px 0;
+    }
+  }
+  
+  /* 档位 C: 超小屏手机 (如 iPhone SE / 折叠屏外屏) */
+  @media (max-width: 380px) {
+    .switch-console {
+      transform: scale(0.45);
+      margin: -80px -10%; /* 允许左右轻微重叠边界 */
+    }
+  }
+
+  /* --- 以下样式保持原样 --- */
   .joy-con {
     width: 90px;
     height: 240px;
@@ -96,7 +127,6 @@
     box-shadow: inset 5px 5px 10px rgba(255,255,255,0.2);
   }
 
-  /* --- 屏幕区域样式 --- */
   .console-screen {
     background: #111;
     padding: 15px 5px;
@@ -140,11 +170,9 @@
     position: relative;
     z-index: 1;
     display: block;
-    /* 确保 iframe 本身可以接收触摸 */
     touch-action: auto; 
   }
 
-  /* --- 按钮细节 --- */
   .stick {
     width: 36px; height: 36px;
     background: #222;
@@ -202,10 +230,7 @@
     bottom: 55px; right: 55px;
     width: 20px; height: 20px;
     border-radius: 50%;
-    /* border: 1px solid #333; */
     background: #222;
-    /* box-shadow: inset 0 0 2px rgba(255,255,255,0.2); */
-    /* background: transparent; */
   }
   .capture {
     bottom: 50px; right: 15px;
@@ -214,7 +239,6 @@
     border-radius: 4px;
   }
 
-  /* --- 动画 --- */
   .dino-emoji {
     font-size: 3rem;
     animation: jump 0.8s infinite alternate;
@@ -238,31 +262,23 @@
     var cover = document.getElementById('dino-cover');
     var frame = document.getElementById('dino-frame');
     var isActivated = false;
-
-    // 判断是否为触摸设备
     var isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
     if (consoleBody && cover && frame) {
       consoleBody.addEventListener('click', function(e) {
-        
-        // 开机逻辑
         if (!isActivated) {
           isActivated = true;
           console.log("Switch powered on!");
-          
           cover.style.opacity = '0';
           cover.style.visibility = 'hidden'; 
-          
-          // 开机后立刻让封面不再接收任何点击让下一次点击直达 Iframe
           cover.style.pointerEvents = 'none';
-
+          
           var gameUrl = frame.getAttribute('data-src');
           if (gameUrl && (frame.src === "" || frame.src === window.location.href)) {
             frame.src = gameUrl;
           }
         }
         
-        // 聚焦逻辑 (仅限非触摸屏/电脑，手机上的点击应该直接穿透给 iframe 触发跳跃)
         if (!isTouchDevice) {
            setTimeout(function() {
              frame.contentWindow.focus();

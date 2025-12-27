@@ -25,3 +25,5 @@ draft: false
 </div>
 
 {{< dino >}}
+
+{{< pixel-arrow >}}

@@ -1,0 +1,113 @@
+<!-- 锚点：放在代码被引用的位置，也就是 _index.md 的最末尾 -->
+<div id="scroll-target-point"></div>
+
+<!-- 箭头本体 -->
+<div id="pixel-scroll-arrow" class="pixel-scroll-container">
+  <!-- 纯 CSS 绘制的像素箭头 -->
+  <div class="pixel-chevron"></div>
+</div>
+
+<style>
+  /* --- 容器定位 --- */
+  .pixel-scroll-container {
+    position: fixed;
+    /* 位置稍微调低一点，因为容器变高了 */
+    bottom: 10px;    
+    left: 50%;
+    /* 保持水平居中 */
+    transform: translateX(-50%); 
+    z-index: 99;
+    
+    /* --- 核心修改：扩大点击热区 --- */
+    /* 给它一个显式的、足够大的尺寸 (80x80像素) */
+    width: 80px; 
+    height: 80px;
+    
+    /* 使用 Flexbox 确保里面的像素箭头永远在正中心 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* 调试时可以把下面这行注释取消，就能看到红色的点击区域了 */
+    /* background: rgba(255, 0, 0, 0.2); */
+    
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    
+    /* 避免手机端点击时出现蓝色高亮块 */
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* 鼠标悬停时，整体稍微上浮一点，增强交互感 */
+  .pixel-scroll-container:hover {
+    opacity: 1;
+    /* 保持水平居中，同时放大一点 */
+    transform: translateX(-50%) scale(1.1); 
+  }
+
+  /* --- 纯 CSS 像素箭头绘制 (保持不变) --- */
+  .pixel-chevron {
+    width: 4px;
+    height: 4px;
+    background: transparent;
+    color: #fff; 
+    
+    /* 
+       不需要修改这里。
+       因为父容器用了 flex + center，
+       这个 4px 的小点会自动位于 80x80 盒子的正中心，
+       阴影向四周发散，视觉效果完全不变。
+    */
+    box-shadow: 
+      -12px -8px 0 0 currentColor,
+      12px -8px 0 0 currentColor,
+      -8px -4px 0 0 currentColor,
+      8px -4px 0 0 currentColor,
+      -4px 0 0 0 currentColor,
+      4px 0 0 0 currentColor,
+      0 4px 0 0 currentColor;
+      
+    animation: pixel-bounce 1.5s infinite;
+  }
+
+  @keyframes pixel-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+  }
+
+  [data-theme='light'] .pixel-chevron {
+    color: #333; 
+  }
+</style>
+
+<script>
+  (function() {
+    var arrow = document.getElementById('pixel-scroll-arrow');
+    var target = document.getElementById('scroll-target-point');
+
+    if (!arrow || !target) return;
+
+    // 1. 点击滚动逻辑
+    arrow.addEventListener('click', function() {
+      // 获取目标位置 (为了准确跳过头部，建议稍微加一点偏移)
+      // element.scrollIntoView 是最简单的现代 API
+      target.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    });
+
+    // 2. 滚动检测：如果用户已经滚下去了，就隐藏箭头，避免碍眼
+    window.addEventListener('scroll', function() {
+      // 当页面向下滚动超过 100px 时，箭头淡出
+      if (window.scrollY > 100) {
+        arrow.style.opacity = '0';
+        arrow.style.pointerEvents = 'none'; // 隐藏后不可点击
+      } else {
+        arrow.style.opacity = '0.6';
+        arrow.style.pointerEvents = 'auto';
+      }
+    });
+  })();
+</script>

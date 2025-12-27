@@ -1,0 +1,275 @@
+<!-- Switch 整体容器 -->
+<div class="switch-console">
+  
+  <!-- 左手柄 -->
+  <div class="joy-con left">
+    <div class="switch-btn-group d-pad">
+      <div class="switch-btn up"></div>
+      <div class="switch-btn right"></div>
+      <div class="switch-btn down"></div>
+      <div class="switch-btn left"></div>
+    </div>
+    <div class="stick"></div>
+    <div class="switch-btn minus">-</div>
+    <div class="switch-btn capture"></div>
+  </div>
+
+  <!-- 中间屏幕 -->
+  <div class="console-screen">
+    <div class="screen-bezel">
+      <div id="dino-wrapper">
+        <div id="dino-cover">
+          <div class="dino-emoji">🦖</div>
+          <p class="dino-text">PRESS START</p>
+        </div>
+        <iframe id="dino-frame" data-src="/blog/dino/index.html" frameborder="0" scrolling="no"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- 右手柄 -->
+  <div class="joy-con right">
+    <div class="switch-btn plus">+</div>
+    <div class="switch-btn-group abxy">
+      <div class="switch-btn a"></div>
+      <div class="switch-btn b"></div>
+      <div class="switch-btn x"></div>
+      <div class="switch-btn y"></div>
+    </div>
+    <div class="stick"></div>
+    <div class="switch-btn switch-home-btn"></div>
+  </div>
+
+</div>
+
+
+<style>
+  /* --- Switch 整体布局 --- */
+  .switch-console {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3rem auto;
+    padding: 10px;
+    width: fit-content;
+    user-select: none; 
+    -webkit-user-select: none;
+    transform-origin: center;
+    /* 开启硬件加速，但去除可能影响层级的属性 */
+    transform: translateZ(0); 
+    cursor: pointer;
+    /* 关键修正：确保没有任何触摸屏蔽 */
+    touch-action: manipulation; 
+  }
+  
+  @media (max-width: 768px) {
+    .switch-console {
+      /* 手机端保持缩放，确保放得下 */
+      transform: scale(0.65) translateZ(0);
+      margin: -2rem -15%;
+    }
+  }
+
+  /* --- 手柄通用样式 --- */
+  .joy-con {
+    width: 90px;
+    height: 240px;
+    background: #333;
+    position: relative;
+    flex-shrink: 0;
+    box-shadow: inset -5px 0 10px rgba(0,0,0,0.2);
+  }
+
+  .joy-con.left {
+    background-color: #00c3e3;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border-right: 1px solid rgba(0,0,0,0.1);
+    box-shadow: inset 5px 5px 10px rgba(255,255,255,0.2);
+  }
+
+  .joy-con.right {
+    background-color: #ff4554;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-left: 1px solid rgba(0,0,0,0.1);
+    box-shadow: inset 5px 5px 10px rgba(255,255,255,0.2);
+  }
+
+  /* --- 屏幕区域样式 --- */
+  .console-screen {
+    background: #111;
+    padding: 15px 5px;
+    border-radius: 4px;
+    box-shadow: 0 0 0 2px #222;
+    z-index: 10;
+  }
+
+  .screen-bezel {
+    width: 460px;
+    height: 210px;
+    background: #000;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #333;
+  }
+
+  #dino-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: #f7f7f7;
+  }
+
+  #dino-cover {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #222;
+    color: #fff;
+    transition: opacity 0.4s ease, visibility 0.4s;
+  }
+
+  #dino-frame {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+    display: block;
+    /* 确保 iframe 本身可以接收触摸 */
+    touch-action: auto; 
+  }
+
+  /* --- 按钮细节 --- */
+  .stick {
+    width: 36px; height: 36px;
+    background: #222;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+    border: 2px solid #111;
+  }
+  .left .stick { top: 40px; }
+  .right .stick { bottom: 90px; }
+
+  .switch-btn-group {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px; height: 60px;
+  }
+  .left .d-pad { bottom: 80px; }
+  .right .abxy { top: 30px; }
+
+  .switch-btn {
+    position: absolute;
+    background: #222;
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  }
+  
+  .abxy .switch-btn { width: 18px; height: 18px; }
+  .abxy .switch-btn.a { right: 0; top: 21px; }
+  .abxy .switch-btn.b { bottom: 0; left: 21px; }
+  .abxy .switch-btn.x { top: 0; left: 21px; }
+  .abxy .switch-btn.y { left: 0; top: 21px; }
+
+  .d-pad .switch-btn { width: 18px; height: 18px; }
+  .d-pad .switch-btn.up { top: 0; left: 21px; }
+  .d-pad .switch-btn.down { bottom: 0; left: 21px; }
+  .d-pad .switch-btn.left { left: 0; top: 21px; }
+  .d-pad .switch-btn.right { right: 0; top: 21px; }
+
+  .minus, .plus {
+    width: 16px; height: 4px;
+    background: #333;
+    top: 15px; color: #333; font-size: 0; border-radius: 2px;
+  }
+  .minus { right: 15px; position: absolute; }
+  .plus { left: 15px; position: absolute; }
+  .plus::after {
+    content: ''; position: absolute; width: 4px; height: 16px;
+    background: #333; left: 6px; top: -6px; border-radius: 2px;
+  }
+
+  .switch-home-btn {
+    bottom: 55px; right: 55px;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    /* border: 1px solid #333; */
+    background: #222;
+    /* box-shadow: inset 0 0 2px rgba(255,255,255,0.2); */
+    /* background: transparent; */
+  }
+  .capture {
+    bottom: 50px; right: 15px;
+    width: 20px; height: 20px;
+    background: #222;
+    border-radius: 4px;
+  }
+
+  /* --- 动画 --- */
+  .dino-emoji {
+    font-size: 3rem;
+    animation: jump 0.8s infinite alternate;
+  }
+  .dino-text {
+    margin-top: 10px;
+    font-family: 'Arial', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: #00c3e3;
+    animation: blink 1s infinite;
+  }
+
+  @keyframes jump { from { transform: translateY(0); } to { transform: translateY(-8px); } }
+  @keyframes blink { 50% { opacity: 0; } }
+</style>
+
+<script>
+  (function() {
+    var consoleBody = document.querySelector('.switch-console');
+    var cover = document.getElementById('dino-cover');
+    var frame = document.getElementById('dino-frame');
+    var isActivated = false;
+
+    // 判断是否为触摸设备
+    var isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    if (consoleBody && cover && frame) {
+      consoleBody.addEventListener('click', function(e) {
+        
+        // 开机逻辑
+        if (!isActivated) {
+          isActivated = true;
+          console.log("Switch powered on!");
+          
+          cover.style.opacity = '0';
+          cover.style.visibility = 'hidden'; 
+          
+          // 开机后立刻让封面不再接收任何点击让下一次点击直达 Iframe
+          cover.style.pointerEvents = 'none';
+
+          var gameUrl = frame.getAttribute('data-src');
+          if (gameUrl && (frame.src === "" || frame.src === window.location.href)) {
+            frame.src = gameUrl;
+          }
+        }
+        
+        // 聚焦逻辑 (仅限非触摸屏/电脑，手机上的点击应该直接穿透给 iframe 触发跳跃)
+        if (!isTouchDevice) {
+           setTimeout(function() {
+             frame.contentWindow.focus();
+             frame.focus();
+           }, 50);
+        }
+      });
+    }
+  })();
+</script>

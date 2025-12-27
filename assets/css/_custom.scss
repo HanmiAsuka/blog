@@ -1,0 +1,46 @@
+/* assets/css/_custom.scss */
+/* 修改首页 Profile 头像大小 */
+.home-profile .home-avatar a, 
+.home-profile .home-avatar img {
+    width: 10rem !important;  /* 默认可能是 6-8rem，你可以调大到 10rem 或 12rem */
+    height: 10rem !important; /* 保持宽高一致，即正圆 */
+}
+
+/* 增加 Profile 区域的整体留白 */
+.home-profile {
+    padding: 5rem 0 !important; /* 上下 5rem，左右 0。默认可能只有 2rem */
+}
+
+
+// [data-theme='dark'] {
+//     --forest-bg: #6B8F6F;
+//     --forest-text: #e8f5e9;
+//     --forest-border: #2e4a2e;
+
+//     --fi-global-font-color: var(--forest-text);
+//     --fi-global-font-secondary-color: #a5d6a7;
+//     --fi-global-border-color: var(--forest-border);
+//     --fi-hr-background-color: var(--forest-border);
+//     --fi-code-block-background-color: #233323; 
+    
+//     --fi-body-background: var(--forest-bg);
+//     --fi-background-color: var(--forest-bg);
+// }
+
+
+// [data-theme='dark'] body {
+//     background-color: #6B8F6F;
+//     color: #FFFFFF;
+// }
+
+// [data-theme='dark'] a, [data-theme='dark'] a::before, [data-theme='dark'] a::after {
+//     color: #E5DEBD;
+// }
+
+// [data-theme='dark'] .page, 
+// [data-theme='dark'] header,
+// [data-theme='dark'] #header-desktop,
+// [data-theme='dark'] #header-mobile,
+// [data-theme='dark'] .header {
+//     background-color: #6B8F6F !important;
+// }

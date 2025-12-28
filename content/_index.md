@@ -17,9 +17,9 @@ draft: false
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);">
     
   <picture>
-    <source srcset="/blog/images/github-snake-dark.svg" media="(prefers-color-scheme: dark)">
-    <source srcset="/blog/images/github-snake.svg" media="(prefers-color-scheme: light)">
-    <img src="/blog/images/ocean.svg" alt="Github Snake" width="100%">
+    <source srcset="/blog/images/github-snake-dark.svg" media="(prefers-color-scheme: light)">
+    <source srcset="/blog/images/github-snake.svg" media="(prefers-color-scheme: dark)">
+    <img src="/blog/images/github-snake-dark.svg" alt="Github Snake" width="100%">
   </picture>
   
 </div>

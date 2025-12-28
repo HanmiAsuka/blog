@@ -1,6 +1,6 @@
 /* assets/css/_custom.scss */
 /* 修改首页 Profile 头像大小 */
-.home-profile .home-avatar a, 
+.home-profile .home-avatar a,
 .home-profile .home-avatar img {
     width: 10rem !important;  /* 默认可能是 6-8rem，你可以调大到 10rem 或 12rem */
     height: 10rem !important; /* 保持宽高一致，即正圆 */
@@ -12,35 +12,508 @@
 }
 
 
-// [data-theme='dark'] {
-//     --forest-bg: #6B8F6F;
-//     --forest-text: #e8f5e9;
-//     --forest-border: #2e4a2e;
+/* ========================================
+   🌲 森林主题配色 (Dark Mode)
+   主色调: 背景绿 #6B8F6F, 文字米 #E5DEBD
+   ======================================== */
 
-//     --fi-global-font-color: var(--forest-text);
-//     --fi-global-font-secondary-color: #a5d6a7;
-//     --fi-global-border-color: var(--forest-border);
-//     --fi-hr-background-color: var(--forest-border);
-//     --fi-code-block-background-color: #233323; 
-    
-//     --fi-body-background: var(--forest-bg);
-//     --fi-background-color: var(--forest-bg);
-// }
+[data-theme='dark'] {
+    /* ===== 基础颜色变量定义 ===== */
+    --forest-bg-deep: #5A7A5E;       /* 深绿 - 用于 header/footer 等需要区分的区域 */
+    --forest-bg: #6B8F6F;            /* 主背景绿 */
+    --forest-bg-light: #7A9E7E;      /* 浅绿 - 用于 hover 等状态 */
+    --forest-text: #E5DEBD;          /* 主文字米色 */
+    --forest-text-secondary: #C8C2A0; /* 次要文字 - 略暗的米色 */
+    --forest-text-muted: #A8A288;    /* 更淡的文字 - 用于辅助信息 */
+    --forest-border: #4A6A4E;        /* 边框 - 深绿色 */
+    --forest-border-light: #5A7A5E;  /* 浅边框 */
+    --forest-link: #E5DEBD;          /* 链接颜色 - 米色 */
+    --forest-link-hover: #FFF8E7;    /* 链接悬停 - 亮米色 */
+    --forest-accent: #8CB88F;        /* 强调色 - 明亮绿 */
+
+    /* ===== 全局 CSS 变量覆盖 ===== */
+    /* 主文字颜色 */
+    --fi-global-font-color: var(--forest-text);
+    /* 次要文字颜色 - 用于日期、摘要等 */
+    --fi-global-font-secondary-color: var(--forest-text-secondary);
+    /* 边框颜色 */
+    --fi-global-border-color: var(--forest-border);
+    /* 链接颜色 */
+    --fi-global-link-color: var(--forest-link);
+    /* 链接悬停颜色 */
+    --fi-global-link-hover-color: var(--forest-link-hover);
+
+    /* ===== 分隔线 ===== */
+    --fi-hr-background-color: var(--forest-border);
+    --fi-hr-before-color: var(--forest-accent);
+
+    /* ===== 代码相关 ===== */
+    /* 行内代码背景 */
+    --fi-code-inline-background-color: rgba(74, 106, 78, 0.5);
+    /* 代码块背景 - 深森林绿 */
+    --fi-code-block-background-color: #2D3D2E;
+    /* 代码块头部颜色 */
+    --fi-code-header-color: var(--forest-text-secondary);
+    --fi-code-header-background-color: #253525;
+    /* 代码高亮行 */
+    --fi-code-highlight-color: rgba(139, 184, 143, 0.15);
+    /* Gist 元信息背景 */
+    --fi-gist-meta-background-color: #253525;
+
+    /* ===== 滚动条 ===== */
+    --fi-scrollbar-thumb-color: var(--forest-border-light);
+    --fi-scrollbar-thumb-hover-color: var(--forest-accent);
+    --fi-scrollbar-track-color: transparent;
+
+    /* ===== 主题色覆盖 ===== */
+    --fi-primary: #8CB88F;
+    --fi-secondary: #A8A288;
+    --fi-success: #7CB87F;
+    --fi-info: #7ABFBF;
+    --fi-warning: #D4C48A;
+    --fi-danger: #C98A8A;
+}
+
+/* ===== Body 主体样式 ===== */
+[data-theme='dark'] body {
+    background-color: #6B8F6F;
+    color: #E5DEBD;
+}
+
+/* ===== 选中文字样式 ===== */
+[data-theme='dark'] ::selection {
+    background-color: rgba(229, 222, 189, 0.3);
+}
+
+/* ===== 链接样式 ===== */
+[data-theme='dark'] a,
+[data-theme='dark'] a::before,
+[data-theme='dark'] a::after {
+    color: #E5DEBD;
+}
+
+[data-theme='dark'] a:hover,
+[data-theme='dark'] a:active {
+    color: #FFF8E7;
+}
+
+/* ===== Header 顶部导航栏 ===== */
+/* 比主背景深一点以区分边界 */
+[data-theme='dark'] header,
+[data-theme='dark'] #header-desktop,
+[data-theme='dark'] #header-mobile {
+    background-color: #5A7A5E !important;
+}
+
+/* Header 阴影效果 */
+[data-theme='dark'] header:hover {
+    box-shadow: 0 0 1.5rem 0 rgba(0, 0, 0, 0.2);
+}
+
+/* 菜单分隔线 */
+[data-theme='dark'] .menu .menu-item-divider {
+    background-color: #4A6A4E;
+}
+
+/* 菜单项图标颜色 */
+[data-theme='dark'] .menu .menu-item .dropdown-icon {
+    color: #E5DEBD;
+}
+
+/* 激活的菜单项 */
+[data-theme='dark'] .menu .menu-item.active > .menu-link,
+[data-theme='dark'] .menu .menu-item.active > .nested-item > .menu-link {
+    color: #FFF8E7;
+}
+
+/* 下拉菜单背景 */
+[data-theme='dark'] #header-desktop .header-wrapper .menu .sub-menu {
+    background-color: #5A7A5E;
+    border-color: #4A6A4E;
+    box-shadow: 0 0 1.5rem 0 rgba(0, 0, 0, 0.2);
+}
+
+/* 搜索框 */
+[data-theme='dark'] .menu .search.mobile input,
+[data-theme='dark'] .open .menu .search input {
+    color: #E5DEBD;
+    background-color: #4A6A4E;
+}
+
+[data-theme='dark'] .menu .search.mobile input::placeholder,
+[data-theme='dark'] .open .menu .search input::placeholder {
+    color: #A8A288;
+}
+
+/* 移动端菜单 */
+[data-theme='dark'] #header-mobile .header-container .menu {
+    background: #5A7A5E;
+    border-top-color: #4A6A4E;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.15);
+}
+
+/* 移动端菜单悬停 */
+[data-theme='dark'] #header-mobile .header-container .menu .menu-item:not(.menu-system):hover {
+    background-color: #4A6A4E;
+}
+
+[data-theme='dark'] #header-mobile .header-container .menu .sub-menu .menu-item:hover {
+    background-color: #3D5A40;
+}
+
+/* 移动端搜索和系统菜单背景 */
+[data-theme='dark'] #header-mobile .header-container .menu .search-wrapper,
+[data-theme='dark'] #header-mobile .header-container .menu .menu-system {
+    background-color: #5A7A5E;
+}
+
+/* 移动端菜单汉堡按钮 */
+[data-theme='dark'] #header-mobile .header-container .header-wrapper .menu-toggle span {
+    background: #E5DEBD;
+}
+
+/* 分隔符 */
+[data-theme='dark'] #header-desktop .header-wrapper .menu .menu-item.delimiter {
+    border-left-color: #4A6A4E;
+}
+
+/* ===== 搜索下拉菜单 ===== */
+[data-theme='dark'] .search-dropdown {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='dark'] .search-dropdown .dropdown-menu {
+    background-color: #6B8F6F;
+}
+
+[data-theme='dark'] .search-dropdown .dropdown-menu .suggestions .suggestion.cursor {
+    background: #5A7A5E;
+}
+
+[data-theme='dark'] .search-dropdown .dropdown-menu .suggestions .suggestion em {
+    background-color: rgba(229, 222, 189, 0.25);
+}
+
+/* ===== Footer 底部 ===== */
+/* Footer 保持和 header 一致的深绿色 */
+[data-theme='dark'] footer {
+    background-color: #5A7A5E;
+}
+
+/* ===== 主页样式 ===== */
+/* 头像阴影 */
+[data-theme='dark'] .home .home-profile .home-avatar img {
+    box-shadow: 0 0 0 0.3618em rgba(229, 222, 189, 0.1);
+}
+
+/* 主页声明文字 */
+[data-theme='dark'] .home .home-profile .home-disclaimer {
+    color: var(--forest-text-secondary);
+}
+
+/* 文章摘要分隔线 */
+[data-theme='dark'] .home.posts .summary:not(:last-of-type)::after {
+    background: repeating-linear-gradient(
+        135deg,
+        #4A6A4E 0px,
+        #4A6A4E 4px,
+        transparent 4px,
+        transparent 8px
+    );
+}
+
+/* 文章摘要内容 */
+[data-theme='dark'] .home.posts .summary .content,
+[data-theme='dark'] .home.posts .summary .content b,
+[data-theme='dark'] .home.posts .summary .content strong {
+    color: var(--forest-text-secondary);
+}
+
+/* ===== 文章页面样式 ===== */
+/* 文章 meta 信息 */
+[data-theme='dark'] .single .post-meta {
+    color: var(--forest-text-secondary);
+}
+
+[data-theme='dark'] .single .post-meta .author img.avatar {
+    border-color: #4A6A4E;
+}
+
+/* 文章内容 */
+[data-theme='dark'] .single .content {
+    color: #E5DEBD;
+}
+
+/* 标题下边框 */
+[data-theme='dark'] .single .content > h1,
+[data-theme='dark'] .single .content > h2 {
+    border-bottom-color: #4A6A4E;
+}
+
+/* 文章内加粗文字 */
+[data-theme='dark'] .single .content b,
+[data-theme='dark'] .single .content strong {
+    color: #F5EECD;
+}
+
+/* 文章内链接 */
+[data-theme='dark'] .single .content a {
+    color: #C8E6C9;
+}
+
+[data-theme='dark'] .single .content a:hover {
+    color: #A5D6A7;
+}
+
+[data-theme='dark'] .single .content a b,
+[data-theme='dark'] .single .content a strong {
+    color: #C8E6C9;
+}
+
+[data-theme='dark'] .single .content a:hover b,
+[data-theme='dark'] .single .content a:hover strong {
+    color: #A5D6A7;
+}
+
+/* 引用块 */
+[data-theme='dark'] .single .content blockquote {
+    color: var(--forest-text-secondary);
+    border-left-color: #4A6A4E;
+}
+
+/* 表格 */
+[data-theme='dark'] .single .content .table-wrapper > table {
+    background: #5A7A5E;
+}
+
+[data-theme='dark'] .single .content .table-wrapper > table thead {
+    background-color: #4A6A4E;
+}
+
+[data-theme='dark'] .single .content .table-wrapper > table:not([class]) tbody tr:nth-child(odd) {
+    background-color: #637E66;
+}
+
+[data-theme='dark'] .single .content .table-wrapper > table:not([class]) tbody tr:hover {
+    background-color: #6F8A72;
+}
+
+[data-theme='dark'] .single .content .table-wrapper > table th,
+[data-theme='dark'] .single .content .table-wrapper > table td {
+    border-color: #4A6A4E;
+}
+
+/* 键盘按键样式 */
+[data-theme='dark'] .single .content kbd {
+    background-color: #5A7A5E;
+    border-color: #4A6A4E;
+    color: #E5DEBD;
+    box-shadow: inset 0 -1px 0 #4A6A4E;
+}
+
+/* 脚注 */
+[data-theme='dark'] .single .content sup[id^='fnref']:has(.footnote-ref) {
+    background-color: rgba(140, 184, 143, 0.2);
+    color: #C8E6C9;
+}
+
+[data-theme='dark'] .single .content .footnotes {
+    color: var(--forest-text-muted);
+}
+
+/* 图片说明文字 */
+[data-theme='dark'] .single .content figure .image-caption:not(:empty) {
+    color: var(--forest-text-secondary);
+}
+
+/* 结束标志 */
+[data-theme='dark'] .single #content[data-end-flag]:not([data-password])::after {
+    color: var(--forest-text-secondary);
+}
+
+/* ===== 目录 (TOC) ===== */
+/* TOC 标题前的竖线 */
+[data-theme='dark'] #toc-auto .toc-title::before {
+    color: #4A6A4E;
+}
+
+/* TOC 链接颜色 */
+[data-theme='dark'] .toc .toc-content ul a:first-child::before {
+    color: #8CB88F;
+}
+
+[data-theme='dark'] #toc-auto .toc-content li.has-active > a,
+[data-theme='dark'] #toc-dialog .toc-content li.has-active > a {
+    color: #8CB88F;
+}
+
+[data-theme='dark'] #toc-auto .toc-content li.has-active::marker,
+[data-theme='dark'] #toc-dialog .toc-content li.has-active::marker {
+    color: #8CB88F;
+}
+
+[data-theme='dark'] #toc-auto .toc-content ul a.active::before,
+[data-theme='dark'] #toc-dialog .toc-content ul a.active::before {
+    color: #A5D6A7;
+}
+
+/* 静态 TOC */
+[data-theme='dark'] #toc-static .toc-title {
+    background: #3D5A40;
+}
+
+[data-theme='dark'] #toc-static .toc-content {
+    background-color: #2D3D2E;
+}
+
+[data-theme='dark'] #toc-static.open .toc-title {
+    background: #4A6A4E;
+}
+
+[data-theme='dark'] #toc-static .toc-content > nav > ul a:hover::before,
+[data-theme='dark'] #toc-static .toc-content > nav > ol a:hover {
+    color: #A5D6A7;
+}
+
+/* TOC 对话框 */
+[data-theme='dark'] #toc-dialog {
+    border-left-color: #4A6A4E;
+    background-color: #6B8F6F;
+}
+
+/* ===== 代码块样式 ===== */
+/* 代码块边框 */
+[data-theme='dark'] .highlight.code-block:not([data-mode='classic']) {
+    border-color: #3D5A40;
+}
+
+/* 代码块展开按钮渐变 */
+[data-theme='dark'] .highlight.code-block .code-expand-btn {
+    background: linear-gradient(
+        180deg,
+        rgba(45, 61, 46, 0) 0%,
+        rgba(45, 61, 46, 0.9) 60%,
+        #2D3D2E 100%
+    );
+}
+
+/* 折叠状态的代码块头部 */
+[data-theme='dark'] .highlight.code-block.is-collapsed .code-header {
+    --fi-code-header-background-color: #1D2D1E;
+}
+
+/* Mac 风格代码块按钮 */
+[data-theme='dark'] .highlight.code-block[data-mode='mac'] pre.chroma::after {
+    --fi-mac-red-dark: #C98A8A;
+    --fi-mac-yellow-dark: #D4C48A;
+    --fi-mac-green-dark: #8CB88F;
+}
+
+/* 行号颜色 */
+[data-theme='dark'] .highlight .lnt,
+[data-theme='dark'] .highlight .ln {
+    color: var(--forest-text-muted);
+}
+
+/* ===== 分页 ===== */
+[data-theme='dark'] .pagination a {
+    color: var(--forest-text-secondary);
+}
+
+[data-theme='dark'] .pagination li:hover a,
+[data-theme='dark'] .pagination li.active a {
+    color: #FFF8E7;
+}
+
+[data-theme='dark'] .pagination li::before,
+[data-theme='dark'] .pagination li::after {
+    background: #FFF8E7;
+}
+
+/* ===== 固定按钮 (返回顶部等) ===== */
+[data-theme='dark'] .fixed-button {
+    color: var(--forest-text-secondary);
+    background-color: #5A7A5E;
+}
+
+[data-theme='dark'] .fixed-button:hover,
+[data-theme='dark'] .fixed-button:active {
+    color: #E5DEBD;
+}
+
+/* 返回顶部进度环 */
+[data-theme='dark'] .back-to-top {
+    --fi-b2t-bg: #4A6A4E;
+    --fi-b2t-prog: #A5D6A7;
+}
+
+/* ===== 归档页面 ===== */
+[data-theme='dark'] .archive .group-title {
+    color: #E5DEBD;
+}
+
+/* ===== 标签云 ===== */
+/* 标签颜色范围从次要文字到主文字 */
+[data-theme='dark'] .tag-cloud-tags a {
+    color: var(--forest-text-secondary) !important;
+}
+
+[data-theme='dark'] .tag-cloud-tags a:hover {
+    color: var(--forest-link-hover) !important;
+}
+
+/* ===== Admonition / Alert 提示框 ===== */
+/* 保持默认颜色但调整背景透明度 */
+
+/* ===== Ruby 注音 ===== */
+[data-theme='dark'] .single .content ruby,
+[data-theme='dark'] .toc ruby {
+    background-color: #2D3D2E;
+}
+
+[data-theme='dark'] .single .content ruby rt,
+[data-theme='dark'] .toc ruby rt {
+    color: var(--forest-text-secondary);
+}
+
+/* ===== Mark 高亮标记 ===== */
+[data-theme='dark'] .single .content mark {
+    background-color: rgba(212, 196, 138, 0.3);
+    color: #E5DEBD;
+}
+
+/* ===== 旧注释代码（保留供参考）===== */
+/*
+[data-theme='dark'] {
+    --forest-bg: #6B8F6F;
+    --forest-text: #e8f5e9;
+    --forest-border: #2e4a2e;
+
+    --fi-global-font-color: var(--forest-text);
+    --fi-global-font-secondary-color: #a5d6a7;
+    --fi-global-border-color: var(--forest-border);
+    --fi-hr-background-color: var(--forest-border);
+    --fi-code-block-background-color: #233323;
+
+    --fi-body-background: var(--forest-bg);
+    --fi-background-color: var(--forest-bg);
+}
 
 
-// [data-theme='dark'] body {
-//     background-color: #6B8F6F;
-//     color: #FFFFFF;
-// }
+[data-theme='dark'] body {
+    background-color: #6B8F6F;
+    color: #FFFFFF;
+}
 
-// [data-theme='dark'] a, [data-theme='dark'] a::before, [data-theme='dark'] a::after {
-//     color: #E5DEBD;
-// }
+[data-theme='dark'] a, [data-theme='dark'] a::before, [data-theme='dark'] a::after {
+    color: #E5DEBD;
+}
 
-// [data-theme='dark'] .page, 
-// [data-theme='dark'] header,
-// [data-theme='dark'] #header-desktop,
-// [data-theme='dark'] #header-mobile,
-// [data-theme='dark'] .header {
-//     background-color: #6B8F6F !important;
-// }
+[data-theme='dark'] .page,
+[data-theme='dark'] header,
+[data-theme='dark'] #header-desktop,
+[data-theme='dark'] #header-mobile,
+[data-theme='dark'] .header {
+    background-color: #6B8F6F !important;
+}
+*/
